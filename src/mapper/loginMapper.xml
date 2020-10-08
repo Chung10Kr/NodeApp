@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="loginMapper">
+  <select id="getLogin">
+   <![CDATA[
+      SELECT 
+          USER_ID, USER_NAME, 
+          (CASE WHEN USER_PWD IS NULL THEN 1 ELSE 0 END) AS CHANGE_PWD, 
+          (CASE WHEN USER_PWD <> CONVERT (VARCHAR (256), HASHBYTES ('SHA1', #{p_user_pwd}), 1)  THEN 0 ELSE 1 END) CHECK_PWD, 
+          (CASE WHEN USER_END_DATE IS NOT NULL AND USER_END_DATE < CONVERT (VARCHAR (8), GETDATE(), 112) THEN 1 ELSE 0 END) AS END_DATE_CHECK
+        FROM 
+          ENV_USER 
+        WHERE 
+          USER_ID = #{p_user_id} 
+      AND USER_TYPE IN ('U', 'S') 
+    ]]>
+  </select>
+</mapper>

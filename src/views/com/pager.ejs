@@ -1,0 +1,59 @@
+
+
+    <ul class="pager">
+        <%
+            var curSet = pasing.curSet
+            var endPage = pasing.endPage
+            var startPage = pasing.startPage
+            var totalSet = pasing.totalSet
+            var totalPage = pasing.totalPage
+            var page_list_size = pasing.page_list_size
+            var page_size = pasing.page_size
+            var curPage = pasing.curPage
+        %>
+        <%
+        if(curPage > 1){
+        %>
+        <li class="previous">
+        <a href='' onclick="searchList('<%= ( curPage - 1)%> '); return false;">이전페이지</a>
+        </li>
+        <%
+        }
+        %>
+        <%
+        for(var i = startPage; i <= endPage; i++){
+        if(i > totalPage){break;}
+        
+        if(i == curPage){
+        %>
+        <li value=<%= i %> class='' >
+        <a href=""   onclick="searchList('<%= i %>'); return false;"   >
+        <%= i %>
+        </a>
+        </li>
+        <%
+        }else{
+        %>
+        <li value=<%= i %> class='active' >
+        <a href=""    onclick="searchList('<%= i %>'); return false;"   >
+        <%= i %>
+        </a>
+        </li>
+        <%
+        }
+        %>
+        <%
+        }
+        %>
+        <%
+        if(curPage < totalPage){
+        %>
+        <li class="next">
+        <a href=""    onclick="searchList('<%= ( curPage + 1) %>' ); return false;" >다음페이지</a>
+        </li>
+        <%
+        }
+        %>
+        </ul>
+        
+        

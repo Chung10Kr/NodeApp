@@ -1,0 +1,53 @@
+
+<script type="text/javascript">
+$(function(){
+	if (navigator.userAgent.indexOf('iPhone')!=-1){
+		addEventListener("load",function(){
+			setTimeout(hideURLbar,0);
+		},false);};
+});
+
+  
+
+
+$(window).load(function(){
+    
+    menuExpanded = false;
+
+    $('.menu-inner').on('click', function(){
+		if( menuExpanded == false){
+			$(this).parent().addClass('expanded');
+			menuExpanded = true;
+		}else{
+			menuExpanded = false;
+        	$(this).parent().removeClass('expanded');
+		}
+	});
+});
+
+function hideURLbar(){
+	window.scrollTo(0,1);
+};
+
+</script>
+
+<div id="menu" class="fl">
+	<div class="menu-inner">
+		<ul class="m_ul">
+			<% if(userNm != ''){ %>
+				<li><a class="noLine" href="/main">Hello <%=userNm%>!</a></li>
+			<% }else{ %>
+				<li><a class="noLine" href="/login/login">Log In</a></li>	
+			<% } %>
+			<li><a class="noLine" href="/board/list" >공지사항</a></li>
+			
+			
+		</ul>
+
+		<% if(userNm != ''){ %>
+			<ul class="m_ul">
+				<li><a class="noLine logOut" href="/login/logOut">Log Out</a></li>	
+			</ul>
+		<% } %>
+	</div>
+</div>

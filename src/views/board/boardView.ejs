@@ -1,0 +1,92 @@
+<% layout('layout_board') -%>
+
+<script type="text/javascript">
+
+    function goList(){
+      var frm = document.editForm;
+      frm.action="/board/list";
+      frm.method="post";
+      frm.submit();
+    };
+    function goEdit(){
+      var frm = document.editForm;
+      frm.action="/board/edit";
+      frm.method="post";
+      frm.submit();
+    }
+    function getFiles(file){
+      
+      var frm = document.editForm;
+      $("#file_id").val(file)
+      frm.action="/filedown";
+      frm.method="post";
+      frm.submit();
+    }
+</script>
+
+<div class="row">
+  
+  
+  <form id="editForm" name="editForm">
+    
+    <input type="hidden" name="board_id" value= '<%=board.BOARD_ID%>'/>
+    <input type="hidden" name="file_id" id="file_id"/>
+    
+  </form>
+
+  <table id="boardList" class="table" >
+    <colgroup>
+      <col style="width: 20%;">
+      <col/>
+    </colgroup>
+    <tbody>
+      <tr>
+        <th>제목</th>
+        <td>
+          <%=board.BOARD_TITLE%>
+        </td>
+      </tr>
+      <tr>
+        <th>작성자</th>
+        <td>
+          <%=board.USER_NAME%>  at  <%=board.CREATE_DATE%>
+        </td>
+      </tr>
+      
+      <tr>
+        <th>첨부파일</th>
+        <td> 
+          <% for(var i=0; i<files.length; i++){ %>
+            <a onclick='getFiles("<%=files[i].FILE_ID%>");return false;' > <%=files[i].FILE_NAME%> </a> <br/>
+          <% } %>    
+        </td>
+      </tr>
+      
+
+      <tr>
+        <th>내용</th>
+        <td>
+          <div style="white-space:pre;"><%=board.BOARD_CONTENT%></div>
+        </td>
+      </tr>
+      <tr>
+        <th>로그</th>
+        <td>
+          <% for(var i=0; i<logs.length; i++){ %>
+            <%=logs[i].USER_NAME%>( <%=logs[i].CNT%> 회),
+          <% } %>
+        </td>
+      </tr>
+      
+    </tbody>
+  </table>
+
+  <div class="fr MgB10">
+    <% if(userId == board.CREATE_BY){ %>
+      <button type="button" class="btn btn-primary" onclick="goEdit();return false;">수정</button>
+    <% } %>
+      <button type="button" class="btn btn-link" onclick="goList();return false;">목록</button>
+  </div>
+
+
+</div>

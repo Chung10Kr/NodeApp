@@ -1,0 +1,82 @@
+<% layout('layout_board') -%>
+
+ <style>
+       table {
+        table-layout: fixed
+    }
+ </style>
+
+<script type="text/javascript">
+
+    
+    $(function(){
+      searchList(1); //  초기조회 
+
+
+      $("#myInput").keypress(function (e) {
+        if (e.which == 13){
+          searchList(1);
+        }
+      });
+
+    });
+    function searchList(pageNum){
+      var url = "/board/listTable";
+      $("#page").val( pageNum );
+      
+      
+
+      var params = $("#boardForm").serialize();
+
+
+      var sucessFunc = function(data) {
+        $("#ajaxTable").html(""); 
+        $("#ajaxTable").html(data);
+      };
+
+      ajaxCallHtml(url, params, sucessFunc);
+    };
+  
+    function goAdd(){
+      var frm = document.boardForm;
+      frm.action="/board/add";
+      frm.method="POST";
+      frm.submit();
+    };
+    function geDetail(BOARD_ID){
+      
+      var frm = document.boardForm;
+      $("#board_id").val(BOARD_ID);
+      frm.action="/board/view";
+      frm.method="POST";
+      frm.submit();
+    };
+</script>
+
+<div class="row">
+
+  <form id="boardForm" name="boardForm">
+    <input type="hidden" name="board_id" id="board_id"/>
+    <input type="hidden" name="page" id="page" value="1"/>
+
+    <input type="text" id="myInput" name="title" placeholder="Search for title..">
+    
+
+    <div class="fr MgB10">
+      <button type="button" class="btn btn-info" onclick="searchList(1);return false;">조회</button>
+    </div>
+
+  </form>
+
+  <div id="ajaxTable"></div>
+
+  <div class="fr MgB10">
+    <% if(user_type == 'S'){ %>
+      <button type="button" class="btn btn-primary" onclick="goAdd();return false;">등록</button>
+    <% } %>
+  </div>
+
+
+  
+  
+</div>

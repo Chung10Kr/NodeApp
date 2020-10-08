@@ -1,0 +1,166 @@
+<% layout('layout_board') -%>
+
+ <style>
+   .DragContent{
+        border:2px dotted gray;
+        width:98%;
+        height:90%;
+        color:#92AAB0;
+        text-align:center;
+        font-size:24px;
+        padding-top:12px;
+        margin-top:10px;
+        overflow: hidden;
+    }
+
+ </style>
+
+<script type="text/javascript">
+
+    var data = new FormData();
+    $(function(){
+      
+      $(".fileInput").change(function(){
+            $("#ex_file_result").text( $(".fileInput").val() )
+            data = new FormData($("#editForm")[0]);
+      });
+
+      
+      var obj = $(".DragContent");
+
+      obj.on('dragenter', function (e) {
+          e.stopPropagation();
+          e.preventDefault();
+          $(this).css('border', '2px solid #5272A0');
+      });
+
+      obj.on('dragleave', function (e) {
+          e.stopPropagation();
+          e.preventDefault();
+          $(this).css('border', '2px dotted #8296C2');
+      });
+
+      obj.on('dragover', function (e) {
+          e.stopPropagation();
+          e.preventDefault();
+      });
+      obj.on('drop', function (e) {
+          e.preventDefault();
+          $(this).css('border', '2px dotted #8296C2');
+
+          var files = e.originalEvent.dataTransfer.files;
+          if(files.length < 1)
+                return;
+          console.log( files )
+          F_FileMultiUpload(files, obj);
+      });
+
+
+    });
+
+    // 파일 멀티 업로드
+    Str ="";
+    function F_FileMultiUpload(files, obj) {
+        if(confirm(files.length + "개의 파일을 업로드 하시겠습니까?") ) {
+            
+            for (var i = 0; i < files.length; i++) {
+                data.append('file', files[i]);
+                Str=Str+""+files[i].name;
+            };
+            $(".DragContent").text(Str);
+        };
+        
+        
+        
+    };
+
+
+    function goAddAct(){
+      var frm = document.editForm;
+      if( !gfnValidate(frm) ){
+        return false;
+      };
+      var url = "/board/add/Act";
+      
+      
+      var params = $("#editForm").serialize();
+
+      var sucessFunc = function(returnValue) {
+          
+          if(returnValue.result){
+            data.append("BOARD_ID" , returnValue.BOARD_ID);
+          
+              $.ajax({
+                url: '/uploadFile',
+                method: 'post',
+                data:data,
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                success: function(res) {
+                    F_FileMultiUpload_Callback(res);
+                }
+          
+            });
+          };
+      };
+      ajaxCall(url , params , sucessFunc);
+    };
+
+    function F_FileMultiUpload_Callback(res){
+      if(res.result == true){
+        alert("등록되었습니다.");
+        goList();
+      }
+    }
+
+    function goList(){
+      var frm = document.editForm;
+      frm.action="/board/list";
+      frm.method="post";
+      frm.submit();
+    };
+
+</script>
+
+<div class="row">
+  
+  <form id="editForm" name="editForm">
+
+  <table id="boardList" class="table" >
+    <colgroup>
+      <col style="width: 20%;">
+      <col/>
+    </colgroup>
+    <tbody>
+      <tr>
+        <th>제목</th>
+        <td>
+          <input type="text" id="title" name="title" class="W100p form-control checkNull" maxlength="50"  placeholder="TITLE" title="TITLE">
+        </td>
+      </tr>
+      <tr>
+        <th>
+            첨부파일
+        </th>
+        <td>
+            <div class="DragContent W100p">Drap and Drop here.</div>
+            <label class="ex_file fl" for="FILE_TAG">파일 선택</label>
+            <label id="ex_file_result" for="FILE_TAG"></label>
+            <input type="file" id="FILE_TAG" name="FILE_TAG" class="fileInput"/>
+        </td>
+      </tr>
+      <tr>
+        <th>내용</th>
+        <td><textarea id="content" name="content" class="W100p form-control" rows="20" cols="35" maxlength="6000"></textarea></td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+  
+<div class="fr MgB10">
+  <button type="button" class="btn btn-primary" onclick="goAddAct();return false;">등록</button>
+  <button type="button" class="btn btn-link" onclick="goList();return false;">목록</button>
+</div>
+
+</div>

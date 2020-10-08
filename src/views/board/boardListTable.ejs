@@ -1,0 +1,33 @@
+<table id="boardList" class="table">
+  <colgroup>
+    
+    <col style="width: 20%;"/>
+    <col/>
+    <col style="width: 15%;"/>
+    <col style="width: 15%;"/>
+  </colgroup>
+  <thead>
+      <tr>
+        <th>작성자</th>
+        <th>제목</th>
+        <th>작성일</th>
+        <th>수정일</th>
+      </tr>
+  </thead>
+  <tbody>
+    <% for(var i=0; i<resultList.length; i++){ %>
+      <tr onclick="geDetail('<%=resultList[i].BOARD_ID%>');return false;" style="cursor: pointer;">
+          
+          <td class="AL"> <%=resultList[i].USER_NAME%></td>
+          <td class="AL" style="word-break:break-all;" >
+            <strong style="color: #32AAFF	;"> <%=resultList[i].TYPE%> </strong> &nbsp;&nbsp; <%=resultList[i].BOARD_TITLE%>
+          </td>
+          <td class="AL"><%=resultList[i].CREATE_DATE%></td>
+          <td class="AL"><%=resultList[i].UPDATE_DATE%></td>
+          
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<% include ../com/pager %>

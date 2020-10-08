@@ -1,0 +1,117 @@
+<% layout('../layout') -%>
+
+
+<style>
+  .loginForm{
+    margin-top: 15%;
+    background-color: white;
+    border-radius: 5px;
+    color: #585858 !important;
+    text-align: center;
+  }
+  .loginTitle{
+    font-size: 2em;
+    font-family: 'notokr-thin';
+    text-align: center;
+  }
+  .valueBox{
+    border-top:none !important;
+    border-right: none !important;
+    border-left: none !important;
+    border-bottom: 2px gray solid !important;
+    font-size: 1em ;
+    width: 90%;
+  }
+  .loginBtn{
+    border-radius: 5px;
+    background-color: #585858;
+    color: #ffffff;
+    text-decoration: none;
+    text-align: center;
+    font-size: 1.5em;
+    width:90%;
+    margin: 5px;
+    display:inline-block;
+  }
+  td , th {
+    border-collapse:collapse;
+    font-size: 1.7em;
+  }
+  input{
+    padding: 10px;
+  }
+
+  </style>
+
+  
+
+<script type="text/javascript">
+  $(function(){
+
+    
+	var filter = "win16|win32|win64|mac|macintel"; 
+
+  if( navigator.platform ){
+
+  if( filter.indexOf( navigator.platform.toLowerCase() ) < 0 ) {
+      $(".loginForm").addClass("W100p");
+    }else{
+      $(".loginForm").addClass("W30p").css("margin-left" , "35%");
+    };
+  };
+
+    var msg = '<%=message%>';
+    if(msg != 'none'){
+      alert(msg);
+    };
+
+    $("#user_pwd").keypress(function(e) {
+          if ('13' == e.keyCode) {
+              loginChk();
+              return false;
+          }
+        });
+
+  });
+
+
+  function loginChk(){
+      var frm = document.loginFrm;
+      if (!gfnValidate(frm)){return;}
+      
+      frm.action="/login/loginChk"
+      frm.method="post";
+      frm.submit();
+  };
+
+</script>
+
+
+<div class="row"> 
+  <div class="col-sm-12">
+      <form id="loginFrm" name="loginFrm" class="W100p H100p">
+        <table class="loginForm H100p">
+          <tbody>
+            <tr>
+              <th class="loginTitle">Login</th>
+            </tr>
+            <tr>
+              <td><input type="text" name="user_id" id="user_id" placeholder="ID" title="ID" class="valueBox checkNull " value="hitec"/></td>
+            </tr>
+            <tr>
+              <td><input type="password" name="user_pwd" id="user_pwd" placeholder="Password" title="Password" class="valueBox checkNull" value="1234"/></td>
+            </tr>
+            <tr>
+              <td>
+                <a href="" onclick="loginChk();return false;" class="loginBtn"> Log In </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>       
+  </div>
+
+
+
+
+</div>

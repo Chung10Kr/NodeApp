@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardMapper">
+
+  <!-- get 유저 타입 -->
+  <select id="getUserType">
+	  SELECT USER_TYPE FROM ENV_USER WHERE USER_ID=#{p_user_id}
+  </select>
+
+
+	<!-- 게시판 리스트 가져오기 -->
+  <select id="getBoardList">
+  SELECT * FROM (
+      SELECT
+          ROW_NUMBER() OVER( ORDER BY  CREATE_DATE DESC , BOARD_ID DESC ) AS NUM,
+          CASE WHEN CREATE_DATE >= (SELECT CONVERT(CHAR(8), GETDATE()-1, 112)) THEN 'NEW' 
+          WHEN UPDATE_DATE >= (SELECT CONVERT(CHAR(8), GETDATE()-1, 112)) THEN 'MOD' 
+          ELSE ''
+          END AS 'TYPE'	,
+          A.BOARD_ID ,
+          A.BOARD_TITLE ,
+          B.USER_NAME ,
+          CONVERT(CHAR(10), A.CREATE_DATE, 23) AS CREATE_DATE,
+          CASE WHEN UPDATE_DATE IS NULL THEN ''
+          ELSE CONVERT(CHAR(10), A.UPDATE_DATE, 23) END AS UPDATE_DATE
+        FROM
+          ENV_BOARD A , ENV_USER B
+        WHERE
+          A.CREATE_BY  = B.USER_ID
+          AND A.USE_YN = 'Y'
+          AND A.BOARD_TITLE  LIKE '%' + #{title} + '%'
+        
+	) A WHERE NUM BETWEEN #{startRow} AND #{endRow}
+  </select>
+  <!-- 게시판 cnt GET -->
+  <select id="getBoardCnt">
+        SELECT
+          COUNT(*) AS CNT
+        FROM
+          ENV_BOARD A
+        WHERE
+          A.USE_YN = 'Y'
+          AND A.BOARD_TITLE  LIKE '%' + #{title} + '%'
+  </select>
+   <!-- 게시판 가져오기 -->
+  <select id="getBoard">
+      SELECT
+          A.BOARD_ID ,
+          A.BOARD_TITLE ,
+          B.USER_NAME ,
+          A.CREATE_BY ,
+          CONVERT(CHAR(10), A.CREATE_DATE, 23) AS CREATE_DATE,
+          A.BOARD_CONTENT ,
+          A.UPDATE_DATE 
+        FROM
+          ENV_BOARD A , ENV_USER B
+        WHERE
+          A.CREATE_BY  = B.USER_ID
+          AND A.BOARD_ID  = #{BOARD_ID}
+        ORDER BY
+          CREATE_BY
+
+  </select>
+
+  <!-- get 게시판 시퀀스 -->
+  <select id="getBoardSeq"> 
+      SELECT NEXT VALUE FOR ENV_BOARD_SEQ AS SEQ
+  </select>
+
+  <!-- get files -->
+  <select id="getFiles">
+    SELECT
+        FILE_ID, FILE_NAME , FILE_DIR 
+      FROM
+        BOARD_FILE BF
+      WHERE
+        BOARD_ID = #{BOARD_ID}
+        AND USE_YN='Y'
+      ORDER BY FILE_ID 
+  </select>
+  <!-- get file -->
+  <select id="getFile">
+    SELECT
+        FILE_ID, FILE_NAME , FILE_DIR 
+      FROM
+        BOARD_FILE BF
+      WHERE
+      FILE_ID = #{FILE_ID}
+      
+  </select>
+
+  <!-- 조회 로그   -->
+  <insert id="insertLog">
+    INSERT INTO SEAH_MES.DBO.BOARD_LOG
+    (USER_ID, CREATE_DATE, BOARD_ID)
+    VALUES(#{USER_ID},GETDATE(), #{BOARD_ID})
+  </insert>
+
+  <!-- 게시판 등록 -->
+  <insert id="insertBoard">
+    INSERT INTO ENV_BOARD
+      (BOARD_ID, BOARD_TITLE, BOARD_CONTENT, CREATE_BY, CREATE_DATE, USE_YN)
+      VALUES
+      (#{BOARD_ID}, #{TITLE}, #{CONTENT} , #{USER_ID}, GETDATE(), 'Y')
+  </insert>
+
+  <!-- 파일 등록 -->
+  <insert id="insertFile">
+    INSERT INTO BOARD_FILE
+    (FILE_ID, BOARD_ID, CREATE_BY, CREATE_DATE, USE_YN, FILE_NAME, FILE_DIR)
+    VALUES( NEXT VALUE FOR BOARD_FILES_SEQ , #{BOARD_ID}, #{USER_ID},GETDATE(), 'Y', #{FILE_NAME}, #{FILE_DIR} )
+  </insert>
+
+
+  <!-- 로그 가져오기 -->
+  <select id="getLog">
+    SELECT
+      EU.USER_NAME ,
+      COUNT(*) AS CNT
+    FROM
+      BOARD_LOG BL ,
+      ENV_USER EU
+    WHERE
+      BL.USER_ID = EU.USER_ID
+      AND BOARD_ID  = #{BOARD_ID}
+    GROUP BY
+      EU.USER_NAME
+  </select>
+
+
+  <!-- 게시판 삭제 및 변경 -->
+  <update id="updateBoard">
+    UPDATE
+      ENV_BOARD
+    SET
+      <choose>
+        <when test="deleteyn == 'Y'">
+            USE_YN = 'N' , 
+        </when>
+        <otherwise>
+            BOARD_TITLE = #{BOARD_TITLE},
+            BOARD_CONTENT = #{BOARD_CONTENT},
+        </otherwise>
+      </choose>
+      UPDATE_BY = #{USER_ID},
+      UPDATE_DATE = GETDATE()
+    WHERE
+      BOARD_ID = #{BOARD_ID}
+  </update>
+  <!-- 게시판 삭제시 파일 삭제 -->
+  <update id="updateFile">
+    UPDATE
+      BOARD_FILE
+    SET
+      USE_YN = 'N',
+      UPDATE_BY = #{USER_ID},
+      UPDATE_DATE = GETDATE()
+    WHERE
+      <choose>
+        <when test="FILE_ID != null and FILE_ID != '' ">
+            FILE_ID = #{FILE_ID}
+        </when>
+        <otherwise>
+            BOARD_ID = #{BOARD_ID}
+        </otherwise>
+      </choose>
+      
+      
+  </update>
+
+</mapper>

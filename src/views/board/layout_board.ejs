@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<!-- Start Head -->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script>
+		var userAgent = navigator.userAgent.toLowerCase(); // 접속 핸드폰 정보 
+	   
+	   // 모바일 홈페이지 바로가기 링크 생성 
+	   if(userAgent.match('iphone')) { 
+		   document.write('<link rel="apple-touch-icon" href="/public/images/seah.png" />') 
+	   } else if(userAgent.match('ipad')) { 
+		   document.write('<link rel="apple-touch-icon" sizes="72*72" href="/public/images/seah.png" />') 
+	   } else if(userAgent.match('ipod')) { 
+		   document.write('<link rel="apple-touch-icon" href="/public/images/seah.png" />') 
+	   } else if(userAgent.match('android')) { 
+		   document.write('<link rel="shortcut icon" href="/public/images/seah.png" />') 
+	   } 
+	  </script>
+	<meta name="mobile-web-app-capable" content="yes">
+
+
+	<title>Seah-공지사항</title>
+
+	<script src="/public/common/js/chart/dist/Chart.js"></script>
+	
+	<script src="/public/common/js/jquery.min.js"></script>
+	<script src="/public/common/js/socket.io.js"></script>
+	<script src="/public/common/js/jquery-1.11.3.min.js"></script>
+	<script src="/public/common/js/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+	<script src="/public/common/js/smartPop/jquery.smartPop.js"></script>
+	<script src="/public/common/js/shortcut/jquery.shortcut-0.1.js"></script>
+	<script src="/public/common/js/shortcut/shortcut.js"></script>
+	<script src="/public/common/js/jquery.blockUI.js"></script>
+	<script src="/public/common/js/jquery.fileDownload.js"></script>
+	<script src="/public/common/js/jquery.tablefix_1.0.0.js"></script>
+	<script src="/public/common/js/common.js"></script>
+	<script src="/public/common/js/cmnReady.js"></script>
+
+	<script src="/public/common/js/loader.js"></script>
+
+	
+
+
+	<script type="text/javascript" src="/public/common/js/boot/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/public/common/js/boot/bootstrap.min.css" />
+	
+	<link rel="stylesheet" href="/public/common/css/common.css">
+	<link rel="stylesheet" href="/public/common/css/BasicSet.css">
+
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style media="screen">
+	#menu{
+		background-color: #ffffff !important;
+	}
+	#menu.expanded {
+		background-color: #FED057 !important;
+		transform: translateX(0%);
+		left: 0px;
+	}
+</style>
+
+</head>
+<!-- End Head -->
+
+
+
+<body id="body" 
+style="
+overflow-y: auto; 
+overflow-x: hidden;
+background-color: #ffffff;
+">
+	<% include ../menu.ejs %>
+<div class="container text-center H95p W95p MgT10">
+	<div class="col-sm-12">
+		<%- body %>
+	</div>
+	
+</div>
+	
+	
+</body>
+
+</html>
+
