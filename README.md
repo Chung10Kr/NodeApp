@@ -1,20 +1,20 @@
-셋팅
+% Node 로그인 , 게시판 Sample
+
+-셋팅
 1. npm install
 2. config.js 수정
 3. node app.js
 
 
 
-배포
+-배포
 1. npm run build
 2. exe파일 실행
 
 
 
 
-DB TABLE ( MSSQL )
-
-
+-MSSQL TABLE
 CREATE SEQUENCE env_board_seq
 AS int     --int 정수형
 START WITH 1 -- 시작 값 0부터
