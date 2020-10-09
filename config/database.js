@@ -39,16 +39,15 @@ var database = async function( mapperNm , queryId ,param){
 		var format = {language: 'sql', indent: '  '};
 		var query = mybatisMapper.getStatement(mapperNm,queryId, param, format);
 
-		// console.log( "[MSSQL SQL]]============>" );
-		// console.log(query);
-		//  console.log( "[MSSQL SQL]]============<" );
+		//console.log( "[MSSQL SQL]]============>" );
+		//console.log(query);
+		//console.log( "[MSSQL SQL]]============<" );
 
 		result = await pool.request().query(query);
 	
 	}catch (err){
 		console.log(err);
 	};
-	
 	
 	return result;
 };

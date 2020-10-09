@@ -32,7 +32,6 @@ var cors = require('cors');
 // 익스프레스 객체 생성
 var app = express();
 
-
 var engine = require('ejs-locals');
 //Layouy 을 사용하기 위한 모듈
 
@@ -45,9 +44,7 @@ app.engine('ejs',engine); //ejs-locals 모듈 설정
 app.set('views', __dirname + '/src/views');
 app.set('view engine', 'ejs');
 
-
 console.log('뷰 엔진이 ejs로 설정되었습니다.');
-
 
 //===== 서버 변수 설정 및 static으로 public 폴더 설정  =====//
 console.log('config.server_port : %d', config.server_port);

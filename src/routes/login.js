@@ -11,6 +11,7 @@
 var requestIp = require('request-ip');
 
 var login = async function(req, res) {
+
   if( typeof( req.session.user ) != 'undefined' ){
     res.redirect('/main');
   }else{
