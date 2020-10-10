@@ -91,7 +91,7 @@
 
   <!-- 조회 로그   -->
   <insert id="insertLog">
-    INSERT INTO SEAH_MES.DBO.BOARD_LOG
+    INSERT INTO BOARD_LOG
     (USER_ID, CREATE_DATE, BOARD_ID)
     VALUES(#{USER_ID},GETDATE(), #{BOARD_ID})
   </insert>
