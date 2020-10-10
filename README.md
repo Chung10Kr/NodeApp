@@ -64,7 +64,7 @@ CREATE TABLE board_file (
 )
 
 
-CREATE TABLE SEAH_MES.dbo.env_board (
+CREATE TABLE env_board (
 	board_id varchar(100) ,
 	board_title varchar(100) ,
 	board_content varchar(8000) ,

@@ -8,26 +8,7 @@ var stringUtils = require("./utils/stringUtils");
 
 
 var list = async function(req, res) {
-
-  var database = req.app.get('database');
-  /*get 유저타입*/
-  var mapperNm = 'boardMapper'
-	var queryId='getUserType'
-  var param = { 
-      p_user_id: res.locals.userId
-  };
-  var result = await database( mapperNm , queryId , param );
-
-  var user_type = '';
-  
-  if(  (result.recordset).length > 0 ){
-    if( typeof( result.recordset[0].USER_TYPE ) != "undefined" ){
-      user_type = result.recordset[0].USER_TYPE;
-    };
-  }
-  /*get 유저타입*/
-
-  res.render('board/boardList.ejs', {param:req  , user_type:user_type });
+  res.render('board/boardList.ejs', {param:req });
 };
 // 조회 화면 이동
 var listTable = async function(req, res) {
@@ -35,10 +16,8 @@ var listTable = async function(req, res) {
   
   var cnt = await database( "boardMapper" , "getBoardCnt" , { title: req.query.title || req.body.title  } );
 
-
   var totalPage = cnt.recordset[0].CNT;
   var page = await stringUtils.pageSet( totalPage , (req.query.page || req.body.page)  );
-
   
   /*글 가져오기*/
   var param2 = { 
