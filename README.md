@@ -41,12 +41,13 @@ CREATE TABLE env_user (
 	user_id varchar(30),
 	user_name varchar(60),
 	user_pwd varchar(256),
-	user_end_date varchar(8)
+	user_end_date varchar(8),
+	user_type varchar(8),
 	CONSTRAINT PK__env_user PRIMARY KEY (user_id)
 )
 insert into env_user
 values
-( 'admin','admin','admin','29990225');
+( 'admin','admin','admin','29990225' , 'S');
 
 
 CREATE TABLE board_file (

@@ -30,7 +30,8 @@ var loginChk = async function(req, res) {
   var mapperNm = 'loginMapper'
 	var queryId='getLogin'
   var param = { 
-      p_user_pwd: p_user_pwd
+      p_user_pwd: p_user_pwd,
+      p_user_id:p_user_id
   };
   
   var result = await database( mapperNm , queryId , param );
