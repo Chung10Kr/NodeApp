@@ -52,8 +52,6 @@ module.exports = {
 
 	// Mybatis Mapper 설정
 	mapper_info:[
-		{mapperNm : 'loginMapper' , path: './src/mapper/loginMapper.xml'},
 		{mapperNm : 'boardMapper' , path: './src/mapper/boardMapper.xml'},
-		
 	]
 }

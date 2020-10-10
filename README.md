@@ -2,6 +2,7 @@
 GIT : https://github.com/LEECHUNGRYEOL/NodeSample.git
 
 
+
 % Node 로그인 , 게시판 Sample
 
 -셋팅
@@ -36,19 +37,6 @@ AS int     --int 정수형
 START WITH 1 -- 시작 값 0부터
 INCREMENT BY 1;   
 
-
-CREATE TABLE env_user (
-	user_id varchar(30),
-	user_name varchar(60),
-	user_pwd varchar(256),
-	user_end_date varchar(8)
-	CONSTRAINT PK__env_user PRIMARY KEY (user_id)
-)
-insert into env_user
-values
-( 'admin','admin','0xD033E22AE348AEB5660FC2140AEC35850C4DA997','29990225');
-
-
 CREATE TABLE board_file (
 	file_id varchar(100) ,
 	board_id varchar(100) ,
@@ -62,8 +50,7 @@ CREATE TABLE board_file (
 	CONSTRAINT board_file_PK PRIMARY KEY (file_id)
 )
 
-
-CREATE TABLE SEAH_MES.dbo.env_board (
+CREATE TABLE dbo.env_board (
 	board_id varchar(100) ,
 	board_title varchar(100) ,
 	board_content varchar(8000) ,
@@ -80,4 +67,4 @@ CREATE TABLE board_log (
 	user_id varchar(100) ,
 	create_date varchar(100),
 	board_id varchar(100) 
-}
+)
