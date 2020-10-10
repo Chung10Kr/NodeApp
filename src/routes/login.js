@@ -21,19 +21,32 @@ var login = async function(req, res) {
 
 
 var loginChk = async function(req, res) {
-  var login_chk = true;
 
   var p_user_id = (req.body.user_id || req.query.user_id);
   var p_user_pwd = (req.body.user_pwd || req.query.user_pwd);
   
-  var result_data = {
-    USER_ID : p_user_id ,
-    USER_NAME :  p_user_pwd
+  var database = req.app.get('database');
+  
+  var mapperNm = 'loginMapper'
+	var queryId='getLogin'
+  var param = { 
+      p_user_pwd: p_user_pwd
+  };
+  
+  var result = await database( mapperNm , queryId , param );
+  
+  var result_date = result.recordset[0];
+  var msg = 'none';
+  var login_chk = true;
+
+  if(result_date.length == 0 ){
+    msg="비밀번호가 틀렸습니다";
+    login_chk=false;
   };
 
   if( login_chk ){
     //로그인 성공후 session 담기
-    req.session.user = result_data;
+    req.session.user = result_date;
 
     res.redirect('/main');
 
