@@ -1,22 +1,13 @@
+# Node Sample
+  부산 품질재단 스마트 팩토리 개발자 양성과정 Web, Node 강의
+  
+## Node Sample
+```
+npm install
+node app.js
+```
 
-GIT : https://github.com/LEECHUNGRYEOL/NodeSample.git
-
-
-% Node 로그인 , 게시판 Sample
-
--셋팅
-1. npm install
-2. config.js 수정
-3. node app.js
-
-
-
--배포
-1. npm run build
-2. exe파일 실행
-
-
-
+```
 
 -MSSQL TABLE
 CREATE SEQUENCE env_board_seq
@@ -82,3 +73,4 @@ CREATE TABLE board_log (
 	create_date varchar(100),
 	board_id varchar(100) 
 )
+```
