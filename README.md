@@ -1,15 +1,21 @@
 # Node Sample
   부산 품질재단 스마트 팩토리 개발자 양성과정 Web, Node 강의
   
-## Node Sample
+### project
+-Express.js  
+-MSSQL  
+-MyBatis  
+-로그인 구현  
+-게시판 구현  
+
+### project Setup
 ```
 npm install
 node app.js
 ```
 
+### DB SCRIPT
 ```
-
--MSSQL TABLE
 CREATE SEQUENCE env_board_seq
 AS int     --int 정수형
 START WITH 1 -- 시작 값 0부터
