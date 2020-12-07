@@ -5,7 +5,7 @@
 -Express.js  
 -MSSQL  
 -MyBatis  
--Node.pptx  : 강의자료
+-Node.pptx  : 강의자료  
 -로그인,게시판 구현  
 
 ### project Setup
