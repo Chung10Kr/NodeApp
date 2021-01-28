@@ -1,5 +1,5 @@
 # Node App
-  품질재단 스마트 팩토리 개발자 양성과정 Web, Node 강
+  품질재단 스마트 팩토리 개발자 양성과정 Web, Node 특별 강의
   
 ### project
 -Express.js  
