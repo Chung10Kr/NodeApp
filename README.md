@@ -1,6 +1,15 @@
-# Node App
-  품질재단 sample
-  
+
+### setup
+
+```
+
+npm install
+
+npm start
+
+```
+
+
 ### project
 -Express.js  
 -MSSQL  
