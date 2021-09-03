@@ -1,14 +1,4 @@
 
-### setup
-
-```
-
-npm install
-
-npm start
-
-```
-
 
 ### project
 -Express.js  
