@@ -1,11 +1,11 @@
 # Node App
-  품질재단 스마트 팩토리 개발자 양성과정 Web, Node 특별 강의
+  품질재단 sample
   
 ### project
 -Express.js  
 -MSSQL  
 -MyBatis  
--Node.pptx  : 강의자료  
+-Node.pptx  : ppt 자료
 -로그인,게시판 구현  
 
 ### project Setup
