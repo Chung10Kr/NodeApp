@@ -10,7 +10,7 @@
 ### project Setup
 ```
 npm install
-node app.js
+node app.js or npm start
 ```
 
 ### DB SCRIPT
